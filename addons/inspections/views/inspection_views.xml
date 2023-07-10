@@ -1,0 +1,143 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="inspection_list">
+      <field name="name">Inspections</field>
+      <field name="model">inspection.inspection</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+          <field name="building_name"/>
+          <field name="customer"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- explict search view definition -->
+
+    <record model="ir.ui.view" id="inspection_search">
+      <field name="name">Inspection Search</field>
+      <field name="model">inspection.inspection</field>
+      <field name="arch" type="xml">
+        <search string="Inspections">
+          <field name="name"/>
+          <field name="customer"/>
+          <separator/>
+          <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+        </search>
+      </field>
+    </record>
+
+
+    <!-- explicit form view definition -->
+
+    <record model="ir.ui.view" id="inspection_form">
+      <field name="name">Door Inspections</field>
+      <field name="model">inspection.inspection</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="toggle_closed_stage" string="Closed" type="object" class="oe_highlight" attrs="{'invisible': [('active', '=', False)]}" />
+            <field name="stage_id" widget="statusbar" 
+              options="{'clickable': '1', 'fold_field': 'fold',}"
+              attrs="{'invisible': [('active', '=', False)]}"/>
+          </header>
+          <sheet>
+            <field name="active" invisible="1"/>
+            <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+            <div class="oe_title">
+                <div class="oe_edit_only">
+                    <label for="name"/>
+                </div>
+                <h1 class="mb32">
+                    <field name="name" class="mb16"/>
+                </h1>
+            </div>
+            <group>
+              <group>
+                <field name="user_id"/>
+                <field name="description"/>
+              </group>
+              <group>
+                <field name="building_name"/>
+                <field name="customer"/>
+              </group>
+              <notebook>
+                <page string="Detail">
+                  <group>
+                    <field name="value"/>
+                    <field name="value2"/>
+                  </group>
+                </page>
+                <page string="Entryways">
+                  <field name="entryways">
+                      <tree string="inspection.entryway">
+                        <field name="name"/>
+                        <field name="entry_label" optional="show"/>
+                        <field name="opening_type" optional="show"/>
+                        <field name="opening_description" optional="show"/>
+                      </tree>
+                  </field>
+                </page>
+              </notebook>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+    
+    <record id="inspection_action_window" model="ir.actions.act_window">
+      <field name="name">Inspection window</field>
+      <field name="res_model">inspection.inspection</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="inspection_stage_window" model="ir.actions.act_window">
+      <field name="name">Inspection Srages Window</field>
+      <field name="res_model">inspection.stages</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- server action to the one above -->
+    
+    <record id="inspection_action_server" model="ir.actions.server">
+      <field name="name">inspection server</field>
+      <field name="model_id" ref="model_inspection_inspection"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+   
+
+    <!-- Top menu item -->
+    
+    <menuitem id="inspection_menu_root" name="inspection"/>
+   
+    <!-- menu categories -->
+    
+    <menuitem id="inspection_menu_1" name="Menu 1"  parent="inspection_menu_root"/>
+    <menuitem id="inspection_menu_2" name="Menu 2" parent="inspection_menu_root"/>
+   
+    <!-- actions -->
+    
+    <menuitem id="inspection_menu_1_list" name="List" parent="inspection_menu_1"
+              action="inspection_action_window"/>
+    <menuitem id="inspection" name="Server to list" parent="inspection_menu_2"
+              action="inspection_action_server"/>
+    <menuitem id="inspection_stages" name="Inspection Stages" parent="inspection_menu_2"
+              action="inspection_stage_window"/>
+
+  </data>
+</odoo>

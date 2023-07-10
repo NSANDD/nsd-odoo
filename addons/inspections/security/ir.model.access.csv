@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_inspection_inspection,inspection_inspection,model_inspection_inspection,base.group_user,1,1,1,1
+access_inspection_entryway,inspection_entryway,model_inspection_entryway,base.group_user,1,1,1,1
+access_inspection_stages,inspection_stages,model_inspection_stages,base.group_user,1,1,1,1
