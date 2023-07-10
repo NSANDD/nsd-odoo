@@ -81,6 +81,9 @@
                         <field name="opening_type" optional="show"/>
                         <field name="opening_description" optional="show"/>
                       </tree>
+                      <form>
+                        <header>Things and stuff</header>
+                      </form>
                   </field>
                 </page>
               </notebook>
