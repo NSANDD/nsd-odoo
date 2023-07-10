@@ -33,7 +33,7 @@
     </record>
 
 
-    <!-- explicit form view definition -->
+    <!-- Inspections - explicit form view definition -->
 
     <record model="ir.ui.view" id="inspection_form">
       <field name="name">Door Inspections</field>
@@ -81,9 +81,6 @@
                         <field name="opening_type" optional="show"/>
                         <field name="opening_description" optional="show"/>
                       </tree>
-                      <form>
-                        <header>Things and stuff</header>
-                      </form>
                   </field>
                 </page>
               </notebook>
@@ -93,6 +90,24 @@
       </field>
     </record>
 
+    <!-- Entryways - explicit form view definition -->
+
+    <record model="ir.ui.view" id="entryway_form">
+      <field name="name">Entryway Form</field>
+      <field name="model">inspection.entryway</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="entry_label" optional="show"/>
+              <field name="opening_type" optional="show"/>
+              <field name="opening_description" optional="show"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
 
     <!-- actions opening views on models -->
     
